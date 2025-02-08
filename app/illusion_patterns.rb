@@ -15,3 +15,4 @@ module IllusionPatterns
 end
 
 require "illusion_patterns/parser"
+require "illusion_patterns/renderer"
