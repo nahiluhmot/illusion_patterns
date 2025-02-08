@@ -1,0 +1,4 @@
+-I ./app
+--require spec_helper
+--require illusion_patterns
+--require rspec/its
