@@ -68,7 +68,7 @@ module IllusionPatterns
     end
 
     def parse_pal_index(index)
-      raise CLIError, "Palette indicies must be integers, got: #{index}" unless ALL_NUMBERS_REGEXP.match?(index)
+      raise CLIError, "Palette indicies must be positive integers, got: #{index}" unless ALL_NUMBERS_REGEXP.match?(index)
 
       index.to_i
     end

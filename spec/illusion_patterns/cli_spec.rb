@@ -1,5 +1,6 @@
 RSpec.describe IllusionPatterns::CLI do
   subject { described_class.new(program_name:, illusion_patterns:, error:, output:) }
+
   let(:program_name) { "./bin/illusion_patterns" }
   let(:illusion_patterns) { double(IllusionPatterns) }
   let(:error) { StringIO.new }
@@ -63,13 +64,13 @@ RSpec.describe IllusionPatterns::CLI do
     context "given an invalid palindex1" do
       let(:pal_index_1) { "one" }
 
-      include_examples(:cli_error, error_message: "Palette indicies must be integers, got: one")
+      include_examples(:cli_error, error_message: "Palette indicies must be positive integers, got: one")
     end
 
     context "given an invalid palindex2" do
-      let(:pal_index_1) { "2.2" }
+      let(:pal_index_2) { "2.2" }
 
-      include_examples(:cli_error, error_message: "Palette indicies must be integers, got: 2.2")
+      include_examples(:cli_error, error_message: "Palette indicies must be positive integers, got: 2.2")
     end
 
     context "given an invalid direction" do
@@ -159,6 +160,7 @@ RSpec.describe IllusionPatterns::CLI do
             .with(chart)
             .and_return(rendered_output)
         end
+
         it "returns a success exit code" do
           expect(subject.run(argv)).to(eq(0))
         end
@@ -169,7 +171,7 @@ RSpec.describe IllusionPatterns::CLI do
           expect(error.string).to(be_empty)
         end
 
-        it "does not write anything to the standard output" do
+        it "writes the rendered chart to the output" do
           subject.run(argv)
 
           expect(output.string).to(eq(rendered_output))
