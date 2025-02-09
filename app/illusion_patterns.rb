@@ -30,8 +30,13 @@ module IllusionPatterns
   def cli(*)
     IllusionPatterns::CLI.new(*)
   end
+
+  def apply_stripe_illusion(*)
+    StripeIllusion.transform(*)
+  end
 end
 
 require "illusion_patterns/cli"
 require "illusion_patterns/parser"
 require "illusion_patterns/renderer"
+require "illusion_patterns/stripe_illusion"

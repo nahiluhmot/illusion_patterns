@@ -51,12 +51,12 @@ module IllusionPatterns
     def parse_args(argv)
       raise CLIError, "Invoke with exactly 4 arguments" if argv.length != 4
 
-      filename, pal_index_1, pal_index_2, direction = argv
+      filename, light_palindex, dark_palindex, direction = argv
 
       {
         filename: parse_filename(filename),
-        pal_index_1: parse_pal_index(pal_index_1),
-        pal_index_2: parse_pal_index(pal_index_2),
+        light_palindex: parse_pal_index(light_palindex),
+        dark_palindex: parse_pal_index(dark_palindex),
         direction: parse_direction(direction)
       }
     end
