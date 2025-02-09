@@ -23,7 +23,7 @@ module IllusionPatterns
       full_stitches.map do |stitch|
         x, y = stitch.values_at(:x, :y)
 
-        next stitch if use_orignial_pattern?(x:, y:, direction:)
+        next stitch if use_orignial_pattern?(y:, direction:)
 
         reference_coordinates = find_reference_coordinates(x:, y:, direction:)
         next_row_color = full_stitches_by_coordinates.dig(*reference_coordinates, :palindex)
@@ -39,16 +39,12 @@ module IllusionPatterns
       end
     end
 
-    def use_orignial_pattern?(x:, y:, direction:)
+    def use_orignial_pattern?(y:, direction:)
       case direction
       when :up
         y.odd?
       when :down
         y.even?
-      when :left
-        x.odd?
-      when :right
-        x.even?
       end
     end
 
@@ -58,10 +54,6 @@ module IllusionPatterns
         [x, y + 1]
       when :down
         [x, y - 1]
-      when :left
-        [x + 1, y]
-      when :right
-        [x - 1, y]
       end
     end
 

@@ -6,7 +6,7 @@ module IllusionPatterns
     PARSE_ERROR_EXIT_CODE = 2
     UNEXPECTED_ERROR_EXIT_CODE = 3
     ALL_NUMBERS_REGEXP = /\A\d+\z/
-    VALID_DIRECTIONS = Set.new([:up, :down, :left, :right]).freeze
+    VALID_DIRECTIONS = Set.new([:up, :down]).freeze
 
     def initialize(program_name: $PROGRAM_NAME, illusion_patterns: IllusionPatterns, error: $stderr, output: $stdout)
       @program_name = program_name
@@ -94,7 +94,7 @@ module IllusionPatterns
         LIGHT_PALINDEX should match the "background" color of the original pattern.
         DARK_PALINDEX should ideally be a color not present in the original pattern (but it should be in the palette).
 
-        DIRECTION must be one of "left", "right", "up", and "down", and denotes the viewing angle at which the pattern may be perceived.
+        DIRECTION must be either "up" or "down", and denotes the viewing angle at which the pattern may be perceived.
 
         The resulting .oxs pattern will be printed to STDOUT.
         Redirect to a file to persist the output.

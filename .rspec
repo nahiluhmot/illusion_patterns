@@ -1,5 +1,6 @@
 -I ./app
 -I ./spec/support
+--require open3
 --require rspec/its
 --require illusion_patterns
 --require illusion_patterns/fixture_helpers

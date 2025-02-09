@@ -35,7 +35,7 @@ RSpec.describe IllusionPatterns::CLI do
               LIGHT_PALINDEX should match the "background" color of the original pattern.
               DARK_PALINDEX should ideally be a color not present in the original pattern (but it should be in the palette).
 
-              DIRECTION must be one of "left", "right", "up", and "down", and denotes the viewing angle at which the pattern may be perceived.
+              DIRECTION must be either "up" or "down", and denotes the viewing angle at which the pattern may be perceived.
 
               The resulting .oxs pattern will be printed to STDOUT.
               Redirect to a file to persist the output.
