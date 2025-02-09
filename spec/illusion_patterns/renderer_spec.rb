@@ -1,6 +1,6 @@
 RSpec.describe IllusionPatterns::Renderer do
   describe ".render" do
-    let(:chart) { open_fixture("piggies.oxs", &IllusionPatterns.method(:parse)) }
+    let(:chart) { open_fixture("piggies.oxs", &IllusionPatterns::Parser.method(:parse)) }
     let(:rendered_chart) { Nokogiri::XML(described_class.render(chart)) }
 
     it "encodes as UTF-8" do

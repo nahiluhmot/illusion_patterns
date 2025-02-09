@@ -17,13 +17,11 @@ module IllusionPatterns
 
     def run(argv)
       with_exit_code_error_handling do
-        parsed_args = parse_args(argv)
-        filename, light_palindex, dark_palindex, direction = parsed_args.values_at(:filename, :light_palindex, :dark_palindex, :direction)
+        filename, light_palindex, dark_palindex, direction = parse_args(argv)
 
-        chart = File.open(filename, &@illusion_patterns.method(:parse))
-
-        transformed_chart = @illusion_patterns.apply_stripe_illusion(chart:, light_palindex:, dark_palindex:, direction:)
-        rendered = @illusion_patterns.render(transformed_chart)
+        rendered = File.open(filename) do |file|
+          @illusion_patterns.transform(file, light_palindex:, dark_palindex:, direction:)
+        end
 
         @output.puts(rendered)
       end
@@ -55,12 +53,12 @@ module IllusionPatterns
 
       filename, light_palindex, dark_palindex, direction = argv
 
-      {
-        filename: parse_filename(filename),
-        light_palindex: parse_pal_index(light_palindex),
-        dark_palindex: parse_pal_index(dark_palindex),
-        direction: parse_direction(direction)
-      }
+      [
+        parse_filename(filename),
+        parse_pal_index(light_palindex),
+        parse_pal_index(dark_palindex),
+        parse_direction(direction)
+      ]
     end
 
     def parse_filename(filename)

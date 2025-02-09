@@ -19,20 +19,11 @@ module IllusionPatterns
     @root ||= File.expand_path("..", __dir__)
   end
 
-  def parse(*)
-    Parser.parse(*)
-  end
+  def transform(input, light_palindex:, dark_palindex:, direction:)
+    chart = Parser.parse(input)
+    transformed_chart = StripeIllusion.transform(chart:, light_palindex:, dark_palindex:, direction:)
 
-  def render(*)
-    Renderer.render(*)
-  end
-
-  def cli(*)
-    IllusionPatterns::CLI.new(*)
-  end
-
-  def apply_stripe_illusion(**)
-    StripeIllusion.transform(**)
+    Renderer.render(transformed_chart)
   end
 end
 

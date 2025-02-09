@@ -86,8 +86,7 @@ RSpec.describe IllusionPatterns::CLI do
     context "when there is an error parsing the file" do
       before do
         allow(illusion_patterns)
-          .to(receive(:parse))
-          .with(instance_of(File))
+          .to(receive(:transform))
           .and_raise(IllusionPatterns::ParseError, "Expected a top-level <chart> tag")
       end
 
@@ -108,84 +107,71 @@ RSpec.describe IllusionPatterns::CLI do
       end
     end
 
-    context "when the file can be successfully parsed" do
-      let(:chart) { double(:chart) }
+    context "when an unexpected error occurs" do
+      before do
+        allow(illusion_patterns)
+          .to(receive(:transform))
+          .and_raise(RuntimeError, "Something really bad happened")
+      end
+
+      it "returns a failure exit code" do
+        expect(subject.run(argv)).to(eq(3))
+      end
+
+      it "prints the error and usage to the error output" do
+        subject.run(argv)
+
+        expect(error.string).to(
+          eq(
+            <<~EOS
+              An unexpected error occurred
+              RuntimeError: Something really bad happened
+            EOS
+          )
+        )
+      end
+
+      it "does not write anything to the standard output" do
+        subject.run(argv)
+
+        expect(output.string).to(be_empty)
+      end
+    end
+
+    context "when the file can be rendered successfully" do
+      let(:rendered_output) do
+        <<~XML
+          <?xml version="1.0"?>
+          <chart />
+        XML
+      end
 
       before do
         allow(illusion_patterns)
-          .to(receive(:parse))
-          .with(instance_of(File))
-          .and_return(chart)
-      end
-
-      context "when an unexpected error occurs" do
-        before do
-          allow(illusion_patterns)
-            .to(receive(:apply_stripe_illusion))
-            .with(chart:, light_palindex: light_palindex.to_i, dark_palindex: dark_palindex.to_i, direction: direction.to_sym)
-            .and_raise(RuntimeError, "Something really bad happened")
-        end
-
-        it "returns a failure exit code" do
-          expect(subject.run(argv)).to(eq(3))
-        end
-
-        it "prints the error and usage to the error output" do
-          subject.run(argv)
-
-          expect(error.string).to(
-            eq(
-              <<~EOS
-                An unexpected error occurred
-                RuntimeError: Something really bad happened
-              EOS
-            )
+          .to(receive(:transform))
+          .with(
+            instance_of(File),
+            light_palindex: light_palindex.to_i,
+            dark_palindex: dark_palindex.to_i,
+            direction: direction.to_sym
           )
-        end
-
-        it "does not write anything to the standard output" do
-          subject.run(argv)
-
-          expect(output.string).to(be_empty)
-        end
+          .and_return(rendered_output)
       end
 
-      context "when the file can be rendered successfully" do
-        let(:transformed_chart) { double(:transformed_chart) }
-        let(:rendered_output) do
-          <<~XML
-            <?xml version="1.0"?>
-            <chart />
-          XML
-        end
+      it "returns a success exit code" do
+        expect(subject.run(argv)).to(eq(0))
+      end
 
-        before do
-          allow(illusion_patterns)
-            .to(receive(:apply_stripe_illusion))
-            .with(chart:, light_palindex: light_palindex.to_i, dark_palindex: dark_palindex.to_i, direction: direction.to_sym)
-            .and_return(transformed_chart)
+      it "prints nothing to the error output" do
+        subject.run(argv)
 
-          allow(illusion_patterns)
-            .to(receive(:render))
-            .with(transformed_chart)
-            .and_return(rendered_output)
-        end
+        expect(error.string).to(be_empty)
+      end
 
-        it "returns a success exit code" do
-          expect(subject.run(argv)).to(eq(0))
-        end
+      it "writes the rendered chart to the output" do
+        subject.run(argv)
 
-        it "prints nothing to the error output" do
-          subject.run(argv)
-
-          expect(error.string).to(be_empty)
-        end
-
-        it "writes the rendered chart to the output" do
-          subject.run(argv)
-
-          expect(output.string).to(eq(rendered_output))
-        end
+        expect(output.string).to(eq(rendered_output))
       end
     end
   end
