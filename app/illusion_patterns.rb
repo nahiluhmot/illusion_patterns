@@ -5,6 +5,7 @@ module IllusionPatterns
   # Base class for errors raised by the application.
   Error = Class.new(StandardError)
 
+  # Raised when an error occurs parsing a pattern.
   ParseError = Class.new(Error)
 
   module_function
