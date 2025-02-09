@@ -26,13 +26,17 @@ RSpec.describe IllusionPatterns::CLI do
             <<~EOS
               #{error_message}
 
-              USAGE: ./bin/illusion_patterns FILE PALINDEX1 PALINDEX2 DIRECTION
+              USAGE: ./bin/illusion_patterns FILE LIGHT_PALINDEX DARK_PALINDEX DIRECTION
 
               Transforms a standard pattern stored in a .oxs FILE into an shadow knit pattern.
-              PALINDEX1 and PALINDEX2 denote the palette colors which will be used for striping; these
-              must be integers.
-              DIRECTION must be one of "left", "right", "up", and "down", and denotes the viewing angle
-              at which the pattern may be perceived.
+
+              LIGHT_PALINDEX and DARK_PALINDEX denote the palette colors which will be used for striping.
+              These must be integers.
+              LIGHT_PALINDEX should match the "background" color of the original pattern.
+              DARK_PALINDEX should ideally be a color not present in the original pattern (but it should be in the palette).
+
+              DIRECTION must be one of "left", "right", "up", and "down", and denotes the viewing angle at which the pattern may be perceived.
+
               The resulting .oxs pattern will be printed to STDOUT.
               Redirect to a file to persist the output.
 
