@@ -4,7 +4,7 @@ module IllusionPatterns
     module_function
 
     def render(chart)
-      builder = Nokogiri::XML::Builder.new do |xml|
+      builder = Nokogiri::XML::Builder.new(encoding: "UTF-8") do |xml|
         xml.root do
           xml.chart do
             xml.format(chart[:format])

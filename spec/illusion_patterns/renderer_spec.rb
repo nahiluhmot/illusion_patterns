@@ -12,6 +12,10 @@ RSpec.describe IllusionPatterns::Renderer do
     end
     let(:rendered_chart) { Nokogiri::XML(described_class.render(chart)) }
 
+    it "encodes as UTF-8" do
+      expect(rendered_chart.encoding).to(eq("UTF-8"))
+    end
+
     it "renders the chart" do
       expect(rendered_chart.xpath("//chart").length)
         .to(eq(1))
