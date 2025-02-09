@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH << File.expand_path("../app/", __dir__)
+
+require "illusion_patterns"
+
+exit_code = IllusionPatterns.cli.run(ARGV)
+
+exit(exit_code)

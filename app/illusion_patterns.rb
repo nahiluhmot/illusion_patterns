@@ -1,3 +1,5 @@
+require "English"
+
 require "nokogiri"
 
 # Top-level module.
@@ -7,6 +9,9 @@ module IllusionPatterns
 
   # Raised when an error occurs parsing a pattern.
   ParseError = Class.new(Error)
+
+  # Raised when an error occurs in the command-line interface.
+  CLIError = Class.new(Error)
 
   module_function
 
@@ -21,7 +26,12 @@ module IllusionPatterns
   def render(*)
     Renderer.render(*)
   end
+
+  def cli(*)
+    IllusionPatterns::CLI.new(*)
+  end
 end
 
+require "illusion_patterns/cli"
 require "illusion_patterns/parser"
 require "illusion_patterns/renderer"
