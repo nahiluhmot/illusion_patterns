@@ -58,7 +58,7 @@ RSpec.describe IllusionPatterns::Parser do
             color: "000000",
             comments: "",
             dashpattern: "",
-            index: "3",
+            index: 3,
             misc1: "",
             name: "Black",
             number: "DMC    310",
@@ -72,9 +72,21 @@ RSpec.describe IllusionPatterns::Parser do
       it "parses the full stitches" do
         expect(chart.dig(:full_stitches, 42)).to(
           eq(
-            palindex: "5",
-            x: "8",
-            y: "45"
+            palindex: 5,
+            x: 8,
+            y: 45
+          )
+        )
+      end
+
+      it "parses the part stitches" do
+        expect(chart.dig(:part_stitches, 5)).to(
+          eq(
+            direction: "2",
+            palindex1: 7,
+            palindex2: 0,
+            x: 10,
+            y: 30
           )
         )
       end
@@ -83,12 +95,12 @@ RSpec.describe IllusionPatterns::Parser do
         expect(chart.dig(:back_stitches, 2)).to(
           eq(
             objecttype: "backstitch",
-            palindex: "3",
+            palindex: 3,
             sequence: "0",
-            x1: "3",
-            x2: "3",
-            y1: "40",
-            y2: "41"
+            x1: 3,
+            x2: 3,
+            y1: 40,
+            y2: 41
           )
         )
       end

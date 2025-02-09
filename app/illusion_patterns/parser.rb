@@ -3,6 +3,11 @@ module IllusionPatterns
   module Parser
     module_function
 
+    PALETTE_ITEM_NUMBER_ATTRIBUTES = Set.new([:index]).freeze
+    STITCH_NUMBER_ATTRIBUTES = Set.new([:palindex, :x, :y]).freeze
+    PART_STITCH_NUMBER_ATTRIBUTES = Set.new([:palindex1, :palindex2, :x, :y]).freeze
+    BACK_STITCH_NUMBER_ATTRIBUTES = Set.new([:palindex, :x1, :x2, :y1, :y2]).freeze
+
     def parse(io_or_string)
       xml = Nokogiri::XML(io_or_string)
       chart = lookup_one(xml, "//chart")
@@ -32,19 +37,19 @@ module IllusionPatterns
     end
 
     def parse_palette(palette)
-      parse_each_attributes(palette, "//palette_item")
+      parse_each_attributes(palette, "//palette_item", number_attributes: PALETTE_ITEM_NUMBER_ATTRIBUTES)
     end
 
     def parse_full_stitches(full_stitches)
-      parse_each_attributes(full_stitches, "//stitch")
+      parse_each_attributes(full_stitches, "//stitch", number_attributes: STITCH_NUMBER_ATTRIBUTES)
     end
 
     def parse_part_stitches(part_stitches)
-      parse_each_attributes(part_stitches, "//partstitch")
+      parse_each_attributes(part_stitches, "//partstitch", number_attributes: PART_STITCH_NUMBER_ATTRIBUTES)
     end
 
     def parse_back_stitches(part_stitches)
-      parse_each_attributes(part_stitches, "//backstitch")
+      parse_each_attributes(part_stitches, "//backstitch", number_attributes: BACK_STITCH_NUMBER_ATTRIBUTES)
     end
 
     def parse_ornaments(ornaments)
@@ -63,12 +68,25 @@ module IllusionPatterns
       results.first
     end
 
-    def parse_each_attributes(xml, xpath_query)
-      xml.xpath(xpath_query).map(&method(:build_attributes_hash))
+    def parse_each_attributes(xml, xpath_query, number_attributes: nil)
+      eles = xml.xpath(xpath_query)
+
+      eles.map do |ele|
+        build_attributes_hash(ele, number_attributes:)
+      end
     end
 
-    def build_attributes_hash(xml)
-      xml.attributes.transform_keys(&:to_sym).transform_values(&:value)
+    def build_attributes_hash(xml, number_attributes: nil)
+      attrs = xml.attributes
+
+      attrs.to_h do |name, attr|
+        key = name.to_sym
+        value = attr.value
+
+        value = value.to_i if number_attributes&.member?(key)
+
+        [key, value]
+      end
     end
   end
 end
