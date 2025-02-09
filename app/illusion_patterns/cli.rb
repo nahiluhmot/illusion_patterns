@@ -17,11 +17,13 @@ module IllusionPatterns
 
     def run(argv)
       with_exit_code_error_handling do
-        parsed = parse_args(argv)
+        parsed_args = parse_args(argv)
+        filename, light_palindex, dark_palindex = parsed_args.values_at(:filename, :light_palindex, :dark_palindex)
 
-        chart = File.open(parsed[:filename], &@illusion_patterns.method(:parse))
+        chart = File.open(filename, &@illusion_patterns.method(:parse))
 
-        rendered = @illusion_patterns.render(chart)
+        transformed_chart = @illusion_patterns.apply_stripe_illusion(chart:, light_palindex:, dark_palindex:)
+        rendered = @illusion_patterns.render(transformed_chart)
 
         @output.puts(rendered)
       end

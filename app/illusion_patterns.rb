@@ -31,8 +31,8 @@ module IllusionPatterns
     IllusionPatterns::CLI.new(*)
   end
 
-  def apply_stripe_illusion(*)
-    StripeIllusion.transform(*)
+  def apply_stripe_illusion(**)
+    StripeIllusion.transform(**)
   end
 end
 

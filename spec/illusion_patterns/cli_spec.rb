@@ -7,10 +7,10 @@ RSpec.describe IllusionPatterns::CLI do
   let(:output) { StringIO.new }
 
   describe "#run" do
-    let(:argv) { [filename, pal_index_1, pal_index_2, direction] }
+    let(:argv) { [filename, light_palindex, dark_palindex, direction] }
     let(:filename) { fixture_path("piggies.oxs") }
-    let(:pal_index_1) { "1" }
-    let(:pal_index_2) { "3" }
+    let(:light_palindex) { "1" }
+    let(:dark_palindex) { "3" }
     let(:direction) { "down" }
 
     shared_examples_for :cli_error do |error_message:|
@@ -65,14 +65,14 @@ RSpec.describe IllusionPatterns::CLI do
       include_examples(:cli_error, error_message: "No such file: nonsense.txt")
     end
 
-    context "given an invalid palindex1" do
-      let(:pal_index_1) { "one" }
+    context "given an invalid light palindex" do
+      let(:light_palindex) { "one" }
 
       include_examples(:cli_error, error_message: "Palette indicies must be positive integers, got: one")
     end
 
-    context "given an invalid palindex2" do
-      let(:pal_index_2) { "2.2" }
+    context "given an invalid dark palindex" do
+      let(:dark_palindex) { "2.2" }
 
       include_examples(:cli_error, error_message: "Palette indicies must be positive integers, got: 2.2")
     end
@@ -121,8 +121,8 @@ RSpec.describe IllusionPatterns::CLI do
       context "when an unexpected error occurs" do
         before do
           allow(illusion_patterns)
-            .to(receive(:render))
-            .with(chart)
+            .to(receive(:apply_stripe_illusion))
+            .with(chart:, light_palindex: light_palindex.to_i, dark_palindex: dark_palindex.to_i)
             .and_raise(RuntimeError, "Something really bad happened")
         end
 
@@ -151,6 +151,7 @@ RSpec.describe IllusionPatterns::CLI do
       end
 
       context "when the file can be rendered successfully" do
+        let(:transformed_chart) { double(:transformed_chart) }
         let(:rendered_output) do
           <<~XML
             <?xml version="1.0"?>
@@ -160,8 +161,13 @@ RSpec.describe IllusionPatterns::CLI do
 
         before do
           allow(illusion_patterns)
+            .to(receive(:apply_stripe_illusion))
+            .with(chart:, light_palindex: light_palindex.to_i, dark_palindex: dark_palindex.to_i)
+            .and_return(transformed_chart)
+
+          allow(illusion_patterns)
             .to(receive(:render))
-            .with(chart)
+            .with(transformed_chart)
             .and_return(rendered_output)
         end
 

@@ -6,38 +6,37 @@ RSpec.describe IllusionPatterns::StripeIllusion do
       {
         full_stitches: [
           {x: 0, y: 0, palindex: 0},
-          {x: 0, y: 1, palindex: 0},
-          {x: 0, y: 2, palindex: 0},
-          {x: 0, y: 3, palindex: 0},
-          {x: 0, y: 4, palindex: 0},
-
           {x: 1, y: 0, palindex: 0},
-          {x: 1, y: 1, palindex: 2},
-          {x: 1, y: 2, palindex: 2},
-          {x: 1, y: 3, palindex: 2},
-          {x: 1, y: 4, palindex: 0},
-
           {x: 2, y: 0, palindex: 0},
-          {x: 2, y: 1, palindex: 2},
-          {x: 2, y: 2, palindex: 0},
-          {x: 2, y: 3, palindex: 2},
-          {x: 2, y: 4, palindex: 0},
-
           {x: 3, y: 0, palindex: 0},
-          {x: 3, y: 1, palindex: 2},
-          {x: 3, y: 2, palindex: 2},
-          {x: 3, y: 3, palindex: 2},
-          {x: 3, y: 4, palindex: 0},
-
           {x: 4, y: 0, palindex: 0},
+
+          {x: 0, y: 1, palindex: 0},
+          {x: 1, y: 1, palindex: 2},
+          {x: 2, y: 1, palindex: 2},
+          {x: 3, y: 1, palindex: 2},
           {x: 4, y: 1, palindex: 0},
+
+          {x: 0, y: 2, palindex: 0},
+          {x: 1, y: 2, palindex: 2},
+          {x: 2, y: 2, palindex: 0},
+          {x: 3, y: 2, palindex: 2},
           {x: 4, y: 2, palindex: 0},
+
+          {x: 0, y: 3, palindex: 0},
+          {x: 1, y: 3, palindex: 2},
+          {x: 2, y: 3, palindex: 2},
+          {x: 3, y: 3, palindex: 2},
           {x: 4, y: 3, palindex: 0},
+
+          {x: 0, y: 4, palindex: 0},
+          {x: 1, y: 4, palindex: 0},
+          {x: 2, y: 4, palindex: 0},
+          {x: 3, y: 4, palindex: 0},
           {x: 4, y: 4, palindex: 0}
         ]
       }
     end
-
     let(:light_palindex) { 0 }
     let(:dark_palindex) { 1 }
 
@@ -48,33 +47,33 @@ RSpec.describe IllusionPatterns::StripeIllusion do
         eq(
           [
             {x: 0, y: 0, palindex: 1},
-            {x: 0, y: 1, palindex: 0},
-            {x: 0, y: 2, palindex: 0},
-            {x: 0, y: 3, palindex: 0},
-            {x: 0, y: 4, palindex: 1},
-
             {x: 1, y: 0, palindex: 0},
-            {x: 1, y: 1, palindex: 2},
-            {x: 1, y: 2, palindex: 2},
-            {x: 1, y: 3, palindex: 2},
-            {x: 1, y: 4, palindex: 0},
-
-            {x: 2, y: 0, palindex: 1},
-            {x: 2, y: 1, palindex: 0},
-            {x: 2, y: 2, palindex: 0},
-            {x: 2, y: 3, palindex: 0},
-            {x: 2, y: 4, palindex: 1},
-
+            {x: 2, y: 0, palindex: 0},
             {x: 3, y: 0, palindex: 0},
-            {x: 3, y: 1, palindex: 2},
-            {x: 3, y: 2, palindex: 2},
-            {x: 3, y: 3, palindex: 2},
-            {x: 3, y: 4, palindex: 0},
-
             {x: 4, y: 0, palindex: 1},
-            {x: 4, y: 1, palindex: 1},
+
+            {x: 0, y: 1, palindex: 0},
+            {x: 1, y: 1, palindex: 2},
+            {x: 2, y: 1, palindex: 2},
+            {x: 3, y: 1, palindex: 2},
+            {x: 4, y: 1, palindex: 0},
+
+            {x: 0, y: 2, palindex: 1},
+            {x: 1, y: 2, palindex: 0},
+            {x: 2, y: 2, palindex: 0},
+            {x: 3, y: 2, palindex: 0},
             {x: 4, y: 2, palindex: 1},
-            {x: 4, y: 3, palindex: 1},
+
+            {x: 0, y: 3, palindex: 0},
+            {x: 1, y: 3, palindex: 2},
+            {x: 2, y: 3, palindex: 2},
+            {x: 3, y: 3, palindex: 2},
+            {x: 4, y: 3, palindex: 0},
+
+            {x: 0, y: 4, palindex: 1},
+            {x: 1, y: 4, palindex: 1},
+            {x: 2, y: 4, palindex: 1},
+            {x: 3, y: 4, palindex: 1},
             {x: 4, y: 4, palindex: 1}
           ]
         )

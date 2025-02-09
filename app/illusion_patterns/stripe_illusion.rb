@@ -22,9 +22,9 @@ module IllusionPatterns
       full_stitches.map do |stitch|
         x, y = stitch.values_at(:x, :y)
 
-        next stitch if x.odd?
+        next stitch if y.odd?
 
-        next_row_color = full_stitches_by_coordinates.dig(x + 1, y, :palindex)
+        next_row_color = full_stitches_by_coordinates.dig(x, y + 1, :palindex)
 
         palindex =
           if next_row_color.nil? || (next_row_color == light_palindex)
