@@ -1,5 +1,3 @@
-require "English"
-
 require "nokogiri"
 
 # Top-level module.
@@ -15,15 +13,15 @@ module IllusionPatterns
 
   module_function
 
-  def root
-    @root ||= File.expand_path("..", __dir__)
-  end
-
   def transform(input, light_palindex:, dark_palindex:, direction:)
     chart = Parser.parse(input)
     transformed_chart = StripeIllusion.transform(chart:, light_palindex:, dark_palindex:, direction:)
 
     Renderer.render(transformed_chart)
+  end
+
+  def run_cli(argv, **opts)
+    CLI.new(**opts).run(argv)
   end
 end
 

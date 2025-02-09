@@ -1,5 +1,5 @@
 RSpec.describe "Integration" do
-  let(:executable) { File.join(IllusionPatterns.root, "bin", "illusion_patterns") }
+  let(:executable) { File.join(repository_root, "bin", "illusion_patterns") }
 
   context "when invoked with an invalid filename" do
     let(:filename) { "madeup.oxs" }
