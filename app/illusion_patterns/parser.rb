@@ -12,6 +12,8 @@ module IllusionPatterns
       xml = Nokogiri::XML(io_or_string)
       chart = lookup_one(xml, "//chart")
 
+      raise ParseError, "Expecetd a top-level <chart> tag" if chart.nil?
+
       parse_chart(chart)
     end
 
@@ -63,12 +65,14 @@ module IllusionPatterns
     def lookup_one(xml, xpath_query)
       results = xml.xpath(xpath_query)
 
-      raise ParseError, "Expected exactly one match for xpath query: #{xpath_query}" if results.length != 1
+      raise ParseError, "More than one match for query: #{xpath_query}" if results.length > 1
 
       results.first
     end
 
     def parse_each_attributes(xml, xpath_query, number_attributes: nil)
+      return [] unless xml
+
       eles = xml.xpath(xpath_query)
 
       eles.map do |ele|
@@ -77,6 +81,8 @@ module IllusionPatterns
     end
 
     def build_attributes_hash(xml, number_attributes: nil)
+      return {} unless xml
+
       attrs = xml.attributes
 
       attrs.to_h do |name, attr|

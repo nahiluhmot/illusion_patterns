@@ -13,6 +13,14 @@ module IllusionPatterns
   def root
     @root ||= File.expand_path("..", __dir__)
   end
+
+  def parse(*)
+    Parser.parse(*)
+  end
+
+  def render(*)
+    Renderer.render(*)
+  end
 end
 
 require "illusion_patterns/parser"

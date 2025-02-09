@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH << File.expand_path("../app/", __dir__)
+
+require "irb"
+require "illusion_patterns"
+
+IRB.start

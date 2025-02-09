@@ -1,4 +1,6 @@
 -I ./app
---require spec_helper
---require illusion_patterns
+-I ./spec/support
 --require rspec/its
+--require illusion_patterns
+--require illusion_patterns/fixture_helpers
+--require spec_helper

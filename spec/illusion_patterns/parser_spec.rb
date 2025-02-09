@@ -11,11 +11,11 @@ RSpec.describe IllusionPatterns::Parser do
       end
     end
 
-    context "given well-formed, blank XML" do
+    context "given well-formed XML without a chart" do
       let(:blank_xml) do
         <<~XML
           <?xml version="1.0" encoding="UTF-8"?>
-          <chart/>
+          <html/>
         XML
       end
 
@@ -26,27 +26,20 @@ RSpec.describe IllusionPatterns::Parser do
     end
 
     context "given a well-formed .oxs file" do
-      let(:data) do
-        File.read(
-          File.expand_path(
-            "spec/fixtures/piggies.oxs",
-            IllusionPatterns.root
-          )
-        )
-      end
-
-      let(:chart) { subject.parse(data) }
+      let(:chart) { open_fixture("piggies.oxs", &subject.method(:parse)) }
 
       it "parses the chart" do
         expect(chart).to(be_a(Hash))
       end
 
       it "parses the format" do
-        expect(chart.dig(:format, :comments09)).to(eq("Colors are expressed in hex RGB format."))
+        expect(chart.dig(:format, :comments09))
+          .to(eq("Colors are expressed in hex RGB format."))
       end
 
       it "parses the properties" do
-        expect(chart.dig(:properties, :copyright)).to(eq("by Ursa Software"))
+        expect(chart.dig(:properties, :copyright))
+          .to(eq("by Ursa Software"))
       end
 
       it "parses the palette" do
