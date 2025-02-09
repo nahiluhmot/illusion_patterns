@@ -122,7 +122,7 @@ RSpec.describe IllusionPatterns::CLI do
         before do
           allow(illusion_patterns)
             .to(receive(:apply_stripe_illusion))
-            .with(chart:, light_palindex: light_palindex.to_i, dark_palindex: dark_palindex.to_i)
+            .with(chart:, light_palindex: light_palindex.to_i, dark_palindex: dark_palindex.to_i, direction: direction.to_sym)
             .and_raise(RuntimeError, "Something really bad happened")
         end
 
@@ -162,7 +162,7 @@ RSpec.describe IllusionPatterns::CLI do
         before do
           allow(illusion_patterns)
             .to(receive(:apply_stripe_illusion))
-            .with(chart:, light_palindex: light_palindex.to_i, dark_palindex: dark_palindex.to_i)
+            .with(chart:, light_palindex: light_palindex.to_i, dark_palindex: dark_palindex.to_i, direction: direction.to_sym)
             .and_return(transformed_chart)
 
           allow(illusion_patterns)
