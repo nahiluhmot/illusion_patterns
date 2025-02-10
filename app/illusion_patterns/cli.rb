@@ -97,7 +97,7 @@ module IllusionPatterns
         The resulting .oxs pattern will be printed to STDOUT.
         Redirect to a file to persist the output.
 
-        Example: #{@program_name} ./pattern.oxs 1 12 left > shadow-pattern.oxs
+        Example: #{@program_name} ./pattern.oxs 1 12 up > shadow-pattern.oxs
       EOS
     end
   end

@@ -40,7 +40,7 @@ RSpec.describe IllusionPatterns::CLI do
               The resulting .oxs pattern will be printed to STDOUT.
               Redirect to a file to persist the output.
 
-              Example: ./bin/illusion_patterns ./pattern.oxs 1 12 left > shadow-pattern.oxs
+              Example: ./bin/illusion_patterns ./pattern.oxs 1 12 up > shadow-pattern.oxs
             EOS
           )
         )
